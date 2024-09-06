@@ -1,4 +1,32 @@
+<div class="page-title">
+  <p>LISTE DES ANNONCES <br /></p>
+</div>
 
+<div class="container">
+  <div class="page-total-number">
+    <p>Nombre d'annonces recupere : {{ annonces.length }} annonces</p>
+  </div>
+  <div class="btn-div">
+    <button class="btn" (click)="loadDate()">Charger les données</button>
+  </div>
+</div>
+<div class="hr"></div>
 
-
-<button (click)="loadDate()">Charger les données</button>
+<div class="card" *ngFor="let annonce of annonces">
+  <div>
+    <div>
+    </div>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ annonce.titre }}</h5>
+    <p class="card-text">{{ annonce.description }}</p>
+    <p class="card-text"><strong>Catégorie:</strong> {{ annonce.categorie }}</p>
+    <p class="card-text"><strong>Prix:</strong> {{ annonce.prix }} $</p>
+    <p class="card-text">
+      <strong>Localisation:</strong> {{ annonce.localisation }}
+    </p>
+    <p class="card-text">
+      <small class="text-muted">Posté le {{ annonce.posted_at }}</small>
+    </p>
+  </div>
+</div>
