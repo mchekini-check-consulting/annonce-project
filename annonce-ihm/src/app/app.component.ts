@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,16 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'annonce-ihm';
+
+
+  constructor(private http: HttpClient) {
+
+  }
+
+  loadDate() {
+    this.http.get("data.json").subscribe(response => {
+      console.log(response);
+    })
+
+  }
 }

@@ -1,0 +1,82 @@
+[
+  {
+    "titre": "Vélo de montagne",
+    "description": "Vélo de montagne en très bon état, utilisé une seule saison.",
+    "categorie": "Sport",
+    "prix": 450.00,
+    "localisation": "Paris, France",
+    "posted_at": "2024-09-01"
+  },
+  {
+    "titre": "Canapé en cuir",
+    "description": "Canapé en cuir noir, trois places, presque neuf.",
+    "categorie": "Mobilier",
+    "prix": 1200.00,
+    "localisation": "Lyon, France",
+    "posted_at": "2024-08-15"
+  },
+  {
+    "titre": "Smartphone Samsung",
+    "description": "Samsung Galaxy S21, 128GB, avec tous les accessoires.",
+    "categorie": "Électronique",
+    "prix": 699.99,
+    "localisation": "Marseille, France",
+    "posted_at": "2024-09-03"
+  },
+  {
+    "titre": "Table basse en bois",
+    "description": "Table basse en chêne massif, style rustique.",
+    "categorie": "Mobilier",
+    "prix": 300.00,
+    "localisation": "Bordeaux, France",
+    "posted_at": "2024-07-25"
+  },
+  {
+    "titre": "Cours de piano",
+    "description": "Professeur expérimenté donne cours de piano à domicile.",
+    "categorie": "Services",
+    "prix": 40.00,
+    "localisation": "Nice, France",
+    "posted_at": "2024-09-02"
+  },
+  {
+    "titre": "Télévision 4K",
+    "description": "TV 4K 55 pouces, avec télécommande et support mural.",
+    "categorie": "Électronique",
+    "prix": 850.00,
+    "localisation": "Nantes, France",
+    "posted_at": "2024-08-29"
+  },
+  {
+    "titre": "Vente maison",
+    "description": "Belle maison de 120m² avec jardin et piscine.",
+    "categorie": "Immobilier",
+    "prix": 350000.00,
+    "localisation": "Toulouse, France",
+    "posted_at": "2024-09-04"
+  },
+  {
+    "titre": "Chaussures de sport",
+    "description": "Chaussures de sport Nike, taille 42, neuves.",
+    "categorie": "Vêtements",
+    "prix": 75.00,
+    "localisation": "Lille, France",
+    "posted_at": "2024-08-20"
+  },
+  {
+    "titre": "Sac à dos randonnée",
+    "description": "Sac à dos de randonnée 50L, parfait pour les longs treks.",
+    "categorie": "Sport",
+    "prix": 120.00,
+    "localisation": "Grenoble, France",
+    "posted_at": "2024-08-10"
+  },
+  {
+    "titre": "Cours d’anglais",
+    "description": "Cours particuliers d’anglais pour tous niveaux.",
+    "categorie": "Services",
+    "prix": 30.00,
+    "localisation": "Strasbourg, France",
+    "posted_at": "2024-09-05"
+  }
+]
