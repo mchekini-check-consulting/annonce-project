@@ -1,0 +1,84 @@
+.card {
+  background-color: #faffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  margin: 35px;
+  cursor: pointer;
+  width: 25%;
+  height: 35%;
+  text-align: left;
+}
+
+.card-body {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 16px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.btn-div .page-total-number {
+  width: 45%;
+  align-content: center;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #666666;
+}
+
+.hr {
+  width: 500px;
+  height: 2px;
+  background-color: rgb(49, 49, 165);
+  margin: 20px auto;
+}
+.card-text strong {
+  color: #333333;
+}
+
+.text-muted {
+  font-size: 0.875rem;
+  color: #999999;
+}
+
+@media (min-width: 768px) {
+  .card {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 100%;
+  }
+}
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #333333;
+  margin-bottom: 30px;
+}
+
+.btn {
+  background-color: rgb(49, 49, 165);
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 15px;
+  border: black;
+}
+.page-total-number {
+  color: #333333;
+  margin-top: 10px;
+  font-style: italic;
+}

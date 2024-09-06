@@ -8,6 +8,8 @@ services:
     container_name: annonce-api
     ports:
       - "8080:8080"
+    links:
+      - "annonce-db:annonce-db"
 
   annonce-ihm:
     build:
@@ -16,6 +18,8 @@ services:
     container_name: annonce-ihm
     ports:
       - "80:80"
+    links:
+      - "annonce-api:annonce-api"
 
 
   annonce-db:
