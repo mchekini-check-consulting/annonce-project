@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class Annonce {
 
     @Id
-    private Long annonceId;
+    private Integer annonceId;
     private String titre;
     private String description;
     private String categorie;
