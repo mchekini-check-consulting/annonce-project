@@ -1,0 +1,91 @@
+#Annonce-api
+
+
+*/.idea
+*.iml
+
+.idea
+
+
+
+*/HELP.md
+*/target/
+*/!.mvn/wrapper/maven-wrapper.jar
+*/!**/src/main/**/target/
+*/!**/src/test/**/target/
+
+### STS ###
+*/.apt_generated
+*/.classpath
+*/.factorypath
+*/.project
+*/.settings
+*/.springBeans
+*/.sts4-cache
+
+### IntelliJ IDEA ###
+*.iws
+*.ipr
+
+### NetBeans ###
+*/nbproject/private/
+*/nbbuild/
+*/dist/
+*/nbdist/
+*/.nb-gradle/
+*/build/
+*/!**/src/main/**/build/
+*/!**/src/test/**/build/
+
+### VS Code ###
+*/.vscode/
+
+
+
+
+#Annonce-IHM
+
+
+
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compiled output
+annonce-ihm/dist
+annonce-ihm/tmp
+annonce-ihm/out-tsc
+annonce-ihm/bazel-out
+
+# Node
+annonce-ihm/node_modules
+annonce-ihm/npm-debug.log
+annonce-ihm/yarn-error.log
+
+# IDEs and editors
+annonce-ihm/.idea/
+annonce-ihm/.project
+annonce-ihm/.classpath
+annonce-ihm/.c9/
+*.launch
+annonce-ihm/.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+annonce-ihm/.vscode/*
+annonce-ihm/!.vscode/settings.json
+annonce-ihm/!.vscode/tasks.json
+annonce-ihm/!.vscode/launch.json
+annonce-ihm/!.vscode/extensions.json
+annonce-ihm/.history/*
+
+# Miscellaneous
+annonce-ihm//.angular/cache
+annonce-ihm/.sass-cache/
+annonce-ihm//connect.lock
+annonce-ihm//coverage
+annonce-ihm//libpeerconnection.log
+annonce-ihm/testem.log
+annonce-ihm//typings
+
+# System files
+annonce-ihm/.DS_Store
+annonce-ihm/Thumbs.db
