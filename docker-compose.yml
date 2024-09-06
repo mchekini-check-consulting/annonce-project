@@ -1,0 +1,30 @@
+version: '3'
+services:
+
+  annonce-api:
+    build:
+      context: ./annonce-api
+      dockerfile: Dockerfile
+    container_name: annonce-api
+    ports:
+      - "8080:8080"
+
+  annonce-ihm:
+    build:
+      context: ./annonce-ihm
+      dockerfile: Dockerfile
+    container_name: annonce-ihm
+    ports:
+      - "80:80"
+
+
+  annonce-db:
+      image: postgres
+      container_name: annonce-db
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=postgres
+      ports:
+        - "5432:5432"
+
