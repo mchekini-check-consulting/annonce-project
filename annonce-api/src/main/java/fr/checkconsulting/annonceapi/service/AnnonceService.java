@@ -1,9 +1,14 @@
 package fr.checkconsulting.annonceapi.service;
 
+import fr.checkconsulting.annonceapi.dto.SearchAnnonceCriteriaDto;
 import fr.checkconsulting.annonceapi.entity.Annonce;
 import fr.checkconsulting.annonceapi.exception.ResourceNotFoundException;
 import fr.checkconsulting.annonceapi.repository.AnnonceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -43,10 +48,10 @@ public class AnnonceService {
             Annonce existingAnnonce = annonceResult.get();
 
             // Mettre à jour les champs nécessaires
-            existingAnnonce.setTitre(annonce.getTitre());
+            existingAnnonce.setTitle(annonce.getTitle());
             existingAnnonce.setDescription(annonce.getDescription());
-            existingAnnonce.setPrix(annonce.getPrix());
-            existingAnnonce.setCategorie(annonce.getCategorie());
+            existingAnnonce.setPrice(annonce.getPrice());
+            existingAnnonce.setCategory(annonce.getCategory());
             existingAnnonce.setPostedAt(annonce.getPostedAt());
 
             // Sauvegarder l'annonce mise à jour
@@ -56,21 +61,22 @@ public class AnnonceService {
             throw new ResourceNotFoundException("Annonce non trouvée avec l'id " + id);
         }
     }
+
     public Annonce patchAnnonce(Integer id, Annonce partialAnnonce) {
 
         Annonce existingAnnonce = annonceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Annonce non trouvé"));
 
-        if (partialAnnonce.getTitre() != null) {
-            existingAnnonce.setTitre(partialAnnonce.getTitre());
+        if (partialAnnonce.getTitle() != null) {
+            existingAnnonce.setTitle(partialAnnonce.getTitle());
         }
         if (partialAnnonce.getDescription() != null) {
             existingAnnonce.setDescription(partialAnnonce.getDescription());
         }
-        if (partialAnnonce.getPrix() != null) {
-            existingAnnonce.setPrix(partialAnnonce.getPrix());
+        if (partialAnnonce.getPrice() != null) {
+            existingAnnonce.setPrice(partialAnnonce.getPrice());
         }
-        if(partialAnnonce.getCategorie() != null){
-            existingAnnonce.setCategorie(partialAnnonce.getCategorie());
+        if (partialAnnonce.getCategory() != null) {
+            existingAnnonce.setCategory(partialAnnonce.getCategory());
         }
         if (partialAnnonce.getPostedAt() != null) {
             existingAnnonce.setPostedAt(partialAnnonce.getPostedAt());
@@ -78,4 +84,15 @@ public class AnnonceService {
         return annonceRepository.save(existingAnnonce);
     }
 
+    public Page<Annonce> searchAnnonce(SearchAnnonceCriteriaDto searchAnnonceCriteriaDto) {
+
+        Pageable pageable = PageRequest.of(searchAnnonceCriteriaDto.getPageNumber(),
+                searchAnnonceCriteriaDto.getPageSize(), Sort.by(searchAnnonceCriteriaDto.getSort().toList()));
+        return annonceRepository.searchAnnonce(searchAnnonceCriteriaDto.getMinPrice(),
+                searchAnnonceCriteriaDto.getMaxPrice(),
+                searchAnnonceCriteriaDto.getTitle(),
+                searchAnnonceCriteriaDto.getCategory(),
+                searchAnnonceCriteriaDto.getStartDate(),
+                searchAnnonceCriteriaDto.getEndDate(), pageable);
+    }
 }

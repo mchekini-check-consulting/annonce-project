@@ -18,9 +18,10 @@ export class AppComponent implements OnInit {
 
   annonces: any = [];
   loadDate() {
-    this.http.get('http://54.89.33.175:8080/api/v1/annonce').subscribe((response) => {
-      this.annonces = response;
-
-    });
+    this.http
+      .get('http://localhost:8080/api/v1/annonce')
+      .subscribe((response) => {
+        this.annonces = response;
+      });
   }
 }

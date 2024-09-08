@@ -1,5 +1,6 @@
 package fr.checkconsulting.annonceapi.resource;
 
+import fr.checkconsulting.annonceapi.dto.SearchAnnonceCriteriaDto;
 import fr.checkconsulting.annonceapi.entity.Annonce;
 import fr.checkconsulting.annonceapi.service.AnnonceService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,4 +96,10 @@ public class AnnonceResource {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchAnnonce(@RequestBody SearchAnnonceCriteriaDto searchAnnonceCriteriaDto) {
+        return ResponseEntity.ok(annonceService.searchAnnonce(searchAnnonceCriteriaDto));
+    }
 }
+
