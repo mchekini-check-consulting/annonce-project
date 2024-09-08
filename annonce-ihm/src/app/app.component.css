@@ -1,84 +1,51 @@
-.card {
-  background-color: gainsboro;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  margin: 35px;
-  cursor: pointer;
-  width: 25%;
-  height: 35%;
-  text-align: left;
+table {
+  width: 80%;
 }
 
-.card-body {
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 16px;
+.search-form {
+  width: 90%;  /* Occupe 90% de la largeur de l'écran */
+  margin: 0 auto;  /* Centre le formulaire horizontalement */
 }
 
-.container {
+.custom-card {
+  border-radius: 12px; /* Arrondi des coins */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Ombre douce */
+  padding: 20px;
+  background-color: #f9f9f9; /* Fond gris très clair */
+}
+
+.form-row {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.btn-div .page-total-number {
-  width: 45%;
-  align-content: center;
+.form-field {
+  flex: 1;
+  margin-right: 15px;
 }
 
-.card-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333333;
+.form-field:last-child {
+  margin-right: 0;
 }
 
-.card-text {
-  font-size: 1rem;
-  color: #666666;
+mat-form-field {
+  width: 100%;
 }
 
-.hr {
-  width: 500px;
-  height: 2px;
-  background-color: rgb(49, 49, 165);
-  margin: 20px auto;
-}
-.card-text strong {
-  color: #333333;
-}
-
-.text-muted {
-  font-size: 0.875rem;
-  color: #999999;
-}
-
-@media (min-width: 768px) {
-  .card {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    max-width: 100%;
-  }
-}
-.page-title {
+mat-card-title {
   text-align: center;
-  font-size: 2rem;
-  color: #333333;
-  margin-bottom: 30px;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-.btn {
-  background-color: rgb(49, 49, 165);
-  color: white;
-  font-weight: bold;
-  padding: 10px;
-  border-radius: 15px;
-  border: black;
+mat-card-actions {
+  display: flex;
+  justify-content: center; /* Centre les boutons */
+  gap: 15px; /* Espacement entre les boutons */
+  margin-top: 20px;
 }
-.page-total-number {
-  color: #333333;
-  margin-top: 10px;
-  font-style: italic;
+
+button {
+  min-width: 150px; /* Largeur minimale des boutons pour qu'ils aient une taille uniforme */
 }

@@ -96,7 +96,7 @@ public class AnnonceResource {
     }
 
     @Operation(summary = "Recherche Multi Critères", description = "Permet de faire une recherche selon plusieurs critères")
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<?> searchAnnonce(
             @Parameter(description = "La recherche doit se faire selon les critères dans l'exemple du body," +
                     " si vous ne souhaitez pas prendre en compte le critère, laissez à null ou ne pas inclure le critère", required = true)

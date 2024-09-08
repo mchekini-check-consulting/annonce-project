@@ -22,5 +22,5 @@ public class SearchAnnonceCriteriaDto {
     private Category category;
     private Integer pageNumber = 0;
     private Integer pageSize = 10;
-    private List<OrderDto> orders;
+    private List<OrderDto> orders = List.of(OrderDto.builder().property("postedAt").direction("DESC").build());
 }

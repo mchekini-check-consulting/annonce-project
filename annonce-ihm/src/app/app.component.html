@@ -1,32 +1,107 @@
-<div class="page-title">
-  <p>Liste des annonces <br /></p>
-</div>
+<form class="search-form" (ngSubmit)="searchByCriteria()">
+  <mat-card class="custom-card">
+    <mat-card-title>Recherche Multi-Critères</mat-card-title>
+    <mat-card-content>
 
-<div class="container">
-  <div class="page-total-number">
-    <p>Nombre d'annonces récuperées : {{ annonces.length }}</p>
-  </div>
-  <div class="btn-div">
-    <button class="btn" (click)="loadDate()">Charger les données</button>
-  </div>
-</div>
-<div class="hr"></div>
+      <div class="form-row">
 
-<div class="card" *ngFor="let annonce of annonces">
-  <div>
-    <div>
-    </div>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">{{ annonce.titre }}</h5>
-    <p class="card-text">{{ annonce.description }}</p>
-    <p class="card-text"><strong>Catégorie:</strong> {{ annonce.categorie }}</p>
-    <p class="card-text"><strong>Prix:</strong> {{ annonce.prix }} $</p>
-    <p class="card-text">
-      <strong>Localisation:</strong> {{ annonce.localisation }}
-    </p>
-    <p class="card-text">
-      <small class="text-muted">Postée le {{ annonce.postedAt }}</small>
-    </p>
-  </div>
-</div>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Titre</mat-label>
+          <input matInput [(ngModel)]="searchCriteria.title" name="title" placeholder="Entrez le titre">
+        </mat-form-field>
+
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Prix min</mat-label>
+          <input matInput type="number" [(ngModel)]="searchCriteria.minPrice" name="priceMin" placeholder="Prix minimum">
+        </mat-form-field>
+
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Prix max</mat-label>
+          <input matInput type="number" [(ngModel)]="searchCriteria.maxPrice" name="priceMax" placeholder="Prix maximum">
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Catégorie</mat-label>
+          <mat-select [(ngModel)]="searchCriteria.category" name="category">
+            <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Date de début</mat-label>
+          <input matInput [matDatepicker]="startPicker" [(ngModel)]="searchCriteria.startDate" name="startDate">
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Date de fin</mat-label>
+          <input matInput [matDatepicker]="endPicker" [(ngModel)]="searchCriteria.endDate" name="endDate">
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Rechercher</button>
+      <button mat-button type="reset" (click)="resetForm()">Réinitialiser</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+
+
+
+
+
+<table mat-table [dataSource]= "annonces" class="mat-elevation-z8" matSort (matSortChange)="sortChange($event)">
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Trier par titre"> Titre </th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Trier par prix"> Prix </th>
+    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="Localisation">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Trier par localisation"> Localisation </th>
+    <td mat-cell *matCellDef="let element"> {{element.localisation}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Trier par Catégorie"> Catégorie </th>
+    <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="postedAt">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Trier par date de publication"> Date de publication </th>
+    <td mat-cell *matCellDef="let element"> {{element.postedAt}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [length]="10"
+               [pageSize]="10"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="onPageChange($event)"
+               aria-label="Select page">
+</mat-paginator>

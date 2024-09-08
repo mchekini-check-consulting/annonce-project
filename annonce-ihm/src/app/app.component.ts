@@ -1,26 +1,91 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import {ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit} from '@angular/core';
+import {AnnonceModel} from "./core/model/annonce.model";
+import {AnnonceService} from "./core/service/annonce.service";
+import {SearchCriteriaModel} from "./core/model/search.criteria.model";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatTableDataSource, MatTableModule} from "@angular/material/table";
+import {MatSortModule, Sort} from "@angular/material/sort";
+import {MatPaginatorModule, PageEvent} from "@angular/material/paginator";
+import {DatePipe, JsonPipe, NgForOf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatCardModule} from "@angular/material/card";
+import {MatSelectModule} from "@angular/material/select";
+import {MatDivider} from "@angular/material/divider";
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, DatePipe, JsonPipe,
+    FormsModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCardModule, MatDivider, NgForOf],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
-    this.loadDate();
+  displayedColumns: string[] = ['title', 'description', 'price', 'category', 'Localisation', 'postedAt'];
+  searchCriteria = new SearchCriteriaModel();
+  annonces = new MatTableDataSource<AnnonceModel>();
+  categories: string[] = [
+    'SPORT',
+    'IMMOBILIER',
+    'MOBILIER',
+    'ELECTRONIQUE',
+    'SERVICES',
+    'VETEMENTS'
+  ];
+
+  constructor(private annonceService: AnnonceService) {
+
   }
 
-  annonces: any = [];
-  loadDate() {
-    this.http.get('http://54.89.33.175:8080/api/v1/annonce').subscribe((response) => {
-      this.annonces = response;
+  ngOnInit(): void {
+    this.loadData();
+  }
 
-    });
+  loadData() {
+
+    this.annonceService.searchAnnonces(this.searchCriteria).subscribe(response => {
+      this.annonces.data = response.content;
+    })
+
+  }
+
+  onPageChange(event: PageEvent) {
+    this.searchCriteria.pageSize = event.pageSize;
+    this.searchCriteria.pageNumber = event.pageIndex;
+    this.loadData();
+  }
+
+  sortChange(event: Sort) {
+    this.searchCriteria.orders = [];
+    if (event.direction !== '') {
+      this.searchCriteria.orders.push({property: event.active, direction: event.direction});
+    }
+    this.loadData();
+  }
+
+  resetForm(): void {
+    this.searchCriteria = new SearchCriteriaModel();
+    this.loadData();
+  }
+
+  searchByCriteria() {
+    console.log(this.searchCriteria);
+    this.loadData();
+
   }
 }
