@@ -1,5 +1,6 @@
 package fr.checkconsulting.annonceapi.resource;
 
+import fr.checkconsulting.annonceapi.dto.SearchAnnonceCriteriaDto;
 import fr.checkconsulting.annonceapi.entity.Annonce;
 import fr.checkconsulting.annonceapi.service.AnnonceService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -93,4 +94,14 @@ public class AnnonceResource {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @Operation(summary = "Recherche Multi Critères", description = "Permet de faire une recherche selon plusieurs critères")
+    @GetMapping("/search")
+    public ResponseEntity<?> searchAnnonce(
+            @Parameter(description = "La recherche doit se faire selon les critères dans l'exemple du body," +
+                    " si vous ne souhaitez pas prendre en compte le critère, laissez à null ou ne pas inclure le critère", required = true)
+            @RequestBody SearchAnnonceCriteriaDto searchAnnonceCriteriaDto) {
+        return ResponseEntity.ok(annonceService.searchAnnonce(searchAnnonceCriteriaDto));
+    }
 }
+

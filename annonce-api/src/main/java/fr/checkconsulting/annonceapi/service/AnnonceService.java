@@ -1,9 +1,14 @@
 package fr.checkconsulting.annonceapi.service;
 
+import fr.checkconsulting.annonceapi.dto.SearchAnnonceCriteriaDto;
 import fr.checkconsulting.annonceapi.entity.Annonce;
 import fr.checkconsulting.annonceapi.exception.ResourceNotFoundException;
 import fr.checkconsulting.annonceapi.repository.AnnonceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -42,40 +47,62 @@ public class AnnonceService {
         if (annonceResult.isPresent()) {
             Annonce existingAnnonce = annonceResult.get();
 
-            // Mettre à jour les champs nécessaires
-            existingAnnonce.setTitre(annonce.getTitre());
+            existingAnnonce.setTitle(annonce.getTitle());
             existingAnnonce.setDescription(annonce.getDescription());
-            existingAnnonce.setPrix(annonce.getPrix());
-            existingAnnonce.setCategorie(annonce.getCategorie());
+            existingAnnonce.setPrice(annonce.getPrice());
+            existingAnnonce.setCategory(annonce.getCategory());
             existingAnnonce.setPostedAt(annonce.getPostedAt());
+            existingAnnonce.setLocalisation(annonce.getLocalisation());
 
-            // Sauvegarder l'annonce mise à jour
             return annonceRepository.save(existingAnnonce);
         } else {
-            // Gérer le cas où l'annonce n'est pas trouvée (vous pouvez lancer une exception ou retourner null)
             throw new ResourceNotFoundException("Annonce non trouvée avec l'id " + id);
         }
     }
+
     public Annonce patchAnnonce(Integer id, Annonce partialAnnonce) {
 
         Annonce existingAnnonce = annonceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Annonce non trouvé"));
 
-        if (partialAnnonce.getTitre() != null) {
-            existingAnnonce.setTitre(partialAnnonce.getTitre());
+        if (partialAnnonce.getTitle() != null) {
+            existingAnnonce.setTitle(partialAnnonce.getTitle());
         }
         if (partialAnnonce.getDescription() != null) {
             existingAnnonce.setDescription(partialAnnonce.getDescription());
         }
-        if (partialAnnonce.getPrix() != null) {
-            existingAnnonce.setPrix(partialAnnonce.getPrix());
+        if (partialAnnonce.getPrice() != null) {
+            existingAnnonce.setPrice(partialAnnonce.getPrice());
         }
-        if(partialAnnonce.getCategorie() != null){
-            existingAnnonce.setCategorie(partialAnnonce.getCategorie());
+        if (partialAnnonce.getCategory() != null) {
+            existingAnnonce.setCategory(partialAnnonce.getCategory());
         }
         if (partialAnnonce.getPostedAt() != null) {
             existingAnnonce.setPostedAt(partialAnnonce.getPostedAt());
         }
+        if (partialAnnonce.getLocalisation() != null) {
+            existingAnnonce.setLocalisation(partialAnnonce.getLocalisation());
+        }
+
         return annonceRepository.save(existingAnnonce);
     }
 
+    public Page<Annonce> searchAnnonce(SearchAnnonceCriteriaDto searchAnnonceCriteriaDto) {
+
+        Sort sort = Sort.by(
+                searchAnnonceCriteriaDto.getOrders().stream()
+                        .map(order -> new Sort.Order(Sort.Direction.fromString(order.getDirection()), order.getProperty()))
+                        .toArray(Sort.Order[]::new)
+        );
+
+        Pageable pageable = PageRequest.of(searchAnnonceCriteriaDto.getPageNumber(),
+                searchAnnonceCriteriaDto.getPageSize(),
+                sort);
+
+        return annonceRepository.searchAnnonce(searchAnnonceCriteriaDto.getMinPrice(),
+                searchAnnonceCriteriaDto.getMaxPrice(),
+                searchAnnonceCriteriaDto.getTitle(),
+                searchAnnonceCriteriaDto.getCategory(),
+                searchAnnonceCriteriaDto.getStartDate(),
+                searchAnnonceCriteriaDto.getEndDate(), pageable);
+    }
 }

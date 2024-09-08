@@ -1,16 +1,15 @@
 package fr.checkconsulting.annonceapi.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import fr.checkconsulting.annonceapi.enums.Category;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import static jakarta.persistence.EnumType.STRING;
 
 @Data
 @Entity
@@ -21,11 +20,11 @@ public class Annonce {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer annonceId;
-    private String titre;
+    private String title;
     private String description;
-    private String categorie;
-    private BigDecimal prix;
+    @Enumerated(STRING)
+    private Category category;
+    private Integer price;
     private String localisation;
     private LocalDate postedAt;
-
 }
