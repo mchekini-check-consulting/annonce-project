@@ -15,6 +15,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatCardModule} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
 import {MatDivider} from "@angular/material/divider";
+import {StatistiquesAnnoncesComponent} from "./statistiques-annonces/statistiques-annonces.component";
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,7 @@ import {MatDivider} from "@angular/material/divider";
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCardModule, MatDivider, NgForOf],
+    MatCardModule, MatDivider, NgForOf, StatistiquesAnnoncesComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
