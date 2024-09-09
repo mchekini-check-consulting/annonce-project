@@ -9,9 +9,9 @@ import { AnnonceModel } from '../../core/model/annonce.model';
 import { AnnonceService } from '../../core/service/annonce.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {  MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { DatePipe, JsonPipe, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -20,7 +20,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDivider } from '@angular/material/divider';
-import {Router} from "@angular/router";
 @Component({
   selector: 'app-annonce-form',
   standalone: true,
@@ -59,7 +58,6 @@ export class AnnonceFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private annonceService: AnnonceService,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -83,7 +81,6 @@ export class AnnonceFormComponent implements OnInit {
         localisation: this.annonceForm.get('localisation')?.value,
         postedAt: this.annonceForm.get('postedAt')?.value,
       };
-      console.log(model);
       this.annonceService.createAnnonce(model).subscribe(() => {
         this.resetForm();
       });

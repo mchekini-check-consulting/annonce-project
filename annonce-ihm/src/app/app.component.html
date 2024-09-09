@@ -54,11 +54,8 @@
 </form>
 
 
-
-
-
 <mat-card-actions class="dialog-btn">
-  <button  mat-raised-button color="primary" (click)="openDialog()">Open dialog</button>
+  <button mat-raised-button color="primary" (click)="openDialog()">Déposer une annonce</button>
 </mat-card-actions>
 <table mat-table [dataSource]= "annonces" class="mat-elevation-z8" matSort (matSortChange)="sortChange($event)">
 
