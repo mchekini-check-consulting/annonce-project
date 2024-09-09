@@ -1,0 +1,27 @@
+.card {
+  width: 90%;
+  max-width: 90%;
+  height: 600px;
+  text-align: center;
+  margin: 40px auto;
+}
+
+.void{
+  margin: 40px auto;
+}
+
+
+
+
+
+@media screen and (min-width: 768px) {
+  .card {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .card {
+    width: 70%;
+  }
+}
