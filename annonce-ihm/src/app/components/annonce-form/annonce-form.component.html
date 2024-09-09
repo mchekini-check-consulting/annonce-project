@@ -1,0 +1,82 @@
+<div class="custom-form">
+  <form [formGroup]="annonceForm" (ngSubmit)="onSubmit()">
+    <mat-card class="custom-card">
+      <mat-card-title>Déposer Une Annonce</mat-card-title>
+      <mat-card-content>
+        <div class="form-row">
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label for="title">Title</mat-label>
+            <input matInput id="title" formControlName="title" type="text" />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label for="price">Price</mat-label>
+            <input matInput id="price" formControlName="price" type="number" />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label for="localisation">Localisation</mat-label>
+            <input
+              matInput
+              id="localisation"
+              formControlName="localisation"
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label for="category">Category</mat-label>
+            <mat-select id="category" formControlName="category">
+              <mat-option
+                *ngFor="let category of categories"
+                [value]="category"
+              >
+                {{ category }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label for="postedAt">Posted At</mat-label>
+            <input
+              matInput
+              [matDatepicker]="datepicker"
+              formControlName="postedAt"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="datepicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #datepicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label for="description">Description</mat-label>
+            <textarea
+              matInput
+              id="description"
+              formControlName="description"
+            ></textarea>
+          </mat-form-field>
+        </div>
+
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit">
+            Submit
+          </button>
+          <button mat-button type="reset" (click)="resetForm()">Annuler</button>
+        </mat-card-actions>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
