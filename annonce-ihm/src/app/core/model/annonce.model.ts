@@ -1,5 +1,5 @@
 export interface AnnonceModel {
-  annonceId: number;
+  annonceId?: number;
   title: string;
   description: string;
   category: string;

@@ -1,6 +1,7 @@
 <form class="search-form" (ngSubmit)="searchByCriteria()">
   <mat-card class="custom-card">
     <mat-card-title>Recherche Multi-Critères</mat-card-title>
+
     <mat-card-content>
 
       <div class="form-row">
@@ -22,7 +23,6 @@
       </div>
 
       <div class="form-row">
-
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Catégorie</mat-label>
           <mat-select [(ngModel)]="searchCriteria.category" name="category">
@@ -57,7 +57,9 @@
 
 
 
-
+<mat-card-actions class="dialog-btn">
+  <button  mat-raised-button color="primary" (click)="openDialog()">Open dialog</button>
+</mat-card-actions>
 <table mat-table [dataSource]= "annonces" class="mat-elevation-z8" matSort (matSortChange)="sortChange($event)">
 
   <!-- Position Column -->
