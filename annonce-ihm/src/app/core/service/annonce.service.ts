@@ -12,14 +12,11 @@ export class AnnonceService {
   constructor(private http: HttpClient) {
   }
 
-  searchAnnonces(body: SearchCriteriaModel): Observable<Page<AnnonceModel>> {
-    return this.http.post<Page<AnnonceModel>>(
-      '52.23.192.75:8080/api/v1/annonce/search',
-      body
-    );
+  searchAnnonces(body : SearchCriteriaModel) : Observable<Page<AnnonceModel>> {
+    return this.http.post<Page<AnnonceModel>>('http://52.23.192.75:8080/api/v1/annonce/search', body);
   }
 
   createAnnonce(body: AnnonceModel): Observable<AnnonceModel> {
-    return this.http.post<AnnonceModel>('52.23.192.75:8080/api/v1/annonce', body);
+    return this.http.post<AnnonceModel>('http://52.23.192.75:8080/api/v1/annonce', body);
   }
 }
