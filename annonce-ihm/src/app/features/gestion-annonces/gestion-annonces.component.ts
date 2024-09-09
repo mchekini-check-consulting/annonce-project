@@ -18,6 +18,7 @@ import {MatDivider} from "@angular/material/divider";
 import {MatIcon} from "@angular/material/icon";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../../shared/delete-dialog/delete-dialog.component";
+import {AnnonceFormComponent} from "../../components/annonce-form/annonce-form.component";
 
 @Component({
   selector: 'app-gestion-annonces',
@@ -94,7 +95,7 @@ export class GestionAnnoncesComponent implements OnInit{
   }
 
   deleteRow(id: number) {
-    this.openDialog().afterClosed().subscribe(value => {
+    this.openDeleteAnnonceDialog().afterClosed().subscribe(value => {
       if (value) {
         this.annonceService.deleteAnnonceById(id).subscribe(() => {
           this.loadData();
@@ -103,11 +104,19 @@ export class GestionAnnoncesComponent implements OnInit{
     })
   }
 
-  openDialog() {
+  openDeleteAnnonceDialog() {
     return this.dialog.open(DeleteDialogComponent, {
       width: '450px',
       enterAnimationDuration: '0ms',
       exitAnimationDuration: '0ms'
+    });
+  }
+
+
+  openCreateAnnonceDialog() {
+    this.dialog.open(AnnonceFormComponent, {
+      width: '60%',
+      // height: '90%'
     });
   }
 

@@ -20,4 +20,8 @@ export class AnnonceService {
   deleteAnnonceById(id: number): Observable<void> {
     return this.http.delete<void>('http://52.23.192.75:8080/api/v1/annonce/' + id);
   }
+
+  createAnnonce(body: AnnonceModel): Observable<AnnonceModel> {
+    return this.http.post<AnnonceModel>('http://52.23.192.75:8080/api/v1/annonce', body);
+  }
 }

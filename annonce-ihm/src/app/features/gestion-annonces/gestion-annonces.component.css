@@ -50,3 +50,9 @@ mat-card-actions {
 button {
   min-width: 150px; /* Largeur minimale des boutons pour qu'ils aient une taille uniforme */
 }
+
+.dialog-btn{
+  justify-content: right;
+  margin: 7px;
+
+}
