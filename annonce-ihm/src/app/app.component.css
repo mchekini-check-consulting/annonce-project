@@ -1,51 +1,81 @@
-table {
-  width: 80%;
-}
-
-.search-form {
-  width: 90%;  /* Occupe 90% de la largeur de l'écran */
-  margin: 0 auto;  /* Centre le formulaire horizontalement */
-}
-
-.custom-card {
-  border-radius: 12px; /* Arrondi des coins */
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Ombre douce */
-  padding: 20px;
-  background-color: #f9f9f9; /* Fond gris très clair */
-}
-
-.form-row {
+/* Container principal de la sidebar et du contenu */
+.sidenav-container {
+  height: 100vh; /* Prendre toute la hauteur de l'écran */
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  flex-direction: row;
 }
 
-.form-field {
-  flex: 1;
-  margin-right: 15px;
+/* Sidebar */
+mat-sidenav {
+  width: 250px; /* Largeur fixe pour la sidebar */
+  background-color: #5c6bc0; /* Couleur plus claire pour la sidebar */
+  color: white;
 }
 
-.form-field:last-child {
-  margin-right: 0;
+/* Contenu principal */
+mat-sidenav-content {
+  flex-grow: 1; /* Prend tout l'espace disponible */
+  padding: 16px;
+  background-color: #f4f5f7;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100vh; /* Prendre toute la hauteur */
+  overflow: auto; /* Permet le défilement si le contenu est trop long */
 }
 
-mat-form-field {
-  width: 100%;
+.content {
+  padding: 16px;
+  flex-grow: 1; /* Assurer que le contenu prenne tout l'espace restant */
 }
 
-mat-card-title {
+/* Header de la sidebar avec logo */
+.sidenav-header {
   text-align: center;
-  font-size: 24px;
-  margin-bottom: 20px;
+  padding: 24px;
+  background-color: #3949ab; /* Ajouter un fond plus foncé derrière le logo */
+  border-bottom: 2px solid #ffffff33; /* Ajout d'une bordure subtile pour séparer le header */
 }
 
-mat-card-actions {
+.logo {
+  width: 120px; /* Agrandir la taille du logo */
+  height: auto;
+  margin-bottom: 20px; /* Augmenter l'espacement en dessous du logo */
+  background-color: white; /* Ajouter un fond blanc pour mieux voir le logo */
+  padding: 10px;
+  border-radius: 10px; /* Ajouter des coins arrondis */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Ajouter une ombre pour faire ressortir le logo */
+}
+
+/* Marges pour descendre les onglets */
+mat-nav-list {
+  margin-top: 50px;
+}
+
+mat-nav-list a {
+  color: #fff; /* Assurez-vous que le texte est blanc */
+  background-color: #7986cb; /* Couleur plus claire pour les onglets */
+  padding: 10px;
+  border: 1px solid #ffffff33; /* Ajout de contour avec un peu de transparence */
+  margin-bottom: 10px;
+  border-radius: 4px;
   display: flex;
-  justify-content: center; /* Centre les boutons */
-  gap: 15px; /* Espacement entre les boutons */
-  margin-top: 20px;
+  align-items: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-button {
-  min-width: 150px; /* Largeur minimale des boutons pour qu'ils aient une taille uniforme */
+mat-nav-list a mat-icon {
+  margin-right: 10px;
+  margin-bottom: 8px;
+  vertical-align: middle;
+}
+
+/* Hover state des éléments du menu */
+mat-list-item:hover {
+  background-color: #9fa8da; /* Changement de la couleur au survol */
+  border-color: white; /* Rendre le contour plus visible au survol */
+}
+
+h3 {
+  color: white;
 }
