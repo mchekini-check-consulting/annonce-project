@@ -1,1 +1,19 @@
-<p>statistiques works!</p>
+<h3 style="text-align: center">Nombre d'annonces par jour</h3>
+<div class="card flex justify-content-center">
+  <mat-card class="mat-card">
+    <p-chart id="p-line" type="line" [data]="dataDate"
+             [options]="optionsDate"
+             [style]="{'width': '40%', 'margin': 'auto'}"
+    />
+  </mat-card>
+</div>
+
+<h3 style="text-align: center">Nombre d'annonces par catégorie</h3>
+<div class="card flex justify-content-center">
+  <mat-card class="mat-card">
+    <p-chart #chart id="p-pie" type="pie" [data]="dataCategory"
+             [options]="options"
+             [style]="{'width': '40%', 'margin': 'auto'}"
+    />
+  </mat-card>
+</div>
