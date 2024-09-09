@@ -20,6 +20,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDivider } from '@angular/material/divider';
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-annonce-form',
   standalone: true,
@@ -40,7 +41,6 @@ import { MatDivider } from '@angular/material/divider';
     MatCardModule,
     MatDivider,
     NgForOf,
-    AnnonceFormComponent,
   ],
   templateUrl: './annonce-form.component.html',
   styleUrl: './annonce-form.component.css',
@@ -58,7 +58,8 @@ export class AnnonceFormComponent implements OnInit {
   ];
   constructor(
     private fb: FormBuilder,
-    private annonceService: AnnonceService
+    private annonceService: AnnonceService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
