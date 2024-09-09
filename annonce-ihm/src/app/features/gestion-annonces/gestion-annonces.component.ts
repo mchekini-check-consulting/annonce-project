@@ -15,6 +15,9 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatCardModule} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
 import {MatDivider} from "@angular/material/divider";
+import {MatIcon} from "@angular/material/icon";
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteDialogComponent} from "../../shared/delete-dialog/delete-dialog.component";
 
 @Component({
   selector: 'app-gestion-annonces',
@@ -26,7 +29,7 @@ import {MatDivider} from "@angular/material/divider";
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCardModule, MatDivider, NgForOf],
+    MatCardModule, MatDivider, NgForOf, MatIcon],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
@@ -35,7 +38,7 @@ import {MatDivider} from "@angular/material/divider";
   styleUrl: './gestion-annonces.component.css'
 })
 export class GestionAnnoncesComponent implements OnInit{
-  displayedColumns: string[] = ['title', 'description', 'price', 'category', 'Localisation', 'postedAt'];
+  displayedColumns: string[] = ['title', 'description', 'price', 'category', 'Localisation', 'postedAt', 'actions'];
   searchCriteria = new SearchCriteriaModel();
   annonces = new MatTableDataSource<AnnonceModel>();
   categories: string[] = [
@@ -47,7 +50,7 @@ export class GestionAnnoncesComponent implements OnInit{
     'VETEMENTS'
   ];
 
-  constructor(private annonceService: AnnonceService) {
+  constructor(private annonceService: AnnonceService, private dialog: MatDialog) {
 
   }
 
@@ -78,7 +81,9 @@ export class GestionAnnoncesComponent implements OnInit{
   }
 
   resetForm(): void {
+    let oldPageSize = this.searchCriteria.pageSize;
     this.searchCriteria = new SearchCriteriaModel();
+    this.searchCriteria.pageSize = oldPageSize;
     this.loadData();
   }
 
@@ -86,6 +91,24 @@ export class GestionAnnoncesComponent implements OnInit{
     console.log(this.searchCriteria);
     this.loadData();
 
+  }
+
+  deleteRow(id: number) {
+    this.openDialog().afterClosed().subscribe(value => {
+      if (value) {
+        this.annonceService.deleteAnnonceById(id).subscribe(() => {
+          this.loadData();
+        });
+      }
+    })
+  }
+
+  openDialog() {
+    return this.dialog.open(DeleteDialogComponent, {
+      width: '450px',
+      enterAnimationDuration: '0ms',
+      exitAnimationDuration: '0ms'
+    });
   }
 
 }

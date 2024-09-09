@@ -16,4 +16,8 @@ export class AnnonceService {
   searchAnnonces(body : SearchCriteriaModel) : Observable<Page<AnnonceModel>> {
      return this.http.post<Page<AnnonceModel>>('http://52.23.192.75:8080/api/v1/annonce/search', body);
   }
+
+  deleteAnnonceById(id: number): Observable<void> {
+    return this.http.delete<void>('http://52.23.192.75:8080/api/v1/annonce/' + id);
+  }
 }
