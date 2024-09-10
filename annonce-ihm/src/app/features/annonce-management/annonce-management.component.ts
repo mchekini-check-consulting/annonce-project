@@ -1,18 +1,34 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AnnonceItemComponent} from "./components/annonce-item/annonce-item.component";
-
+import {AnnonceModel} from "../../core/model/annonce.model";
+import {AnnonceService} from "../../core/service/annonce.service";
+import {SearchCriteriaModel} from "../../core/model/search.criteria.model";
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-annonce-management',
   standalone: true,
   imports: [
-    AnnonceItemComponent
+    AnnonceItemComponent,
+    CommonModule
   ],
   templateUrl: './annonce-management.component.html',
   styleUrl: './annonce-management.component.css'
 })
-export class AnnonceManagementComponent {
+export class AnnonceManagementComponent implements  OnInit{
+  searchCriteria = new SearchCriteriaModel();
+  annonces!:AnnonceModel[];
 
-  displayInformation(message: string) {
-    console.log(message);
+  constructor(private annonceService:AnnonceService) {
+   // this.annonces.push(this.annonceTest);
   }
+  ngOnInit():void{
+    this.searchCriteria.pageSize = 10;
+    this.annonceService.searchAnnonces(this.searchCriteria).subscribe(response => {
+      this.annonces = response.content;
+    });
+  }
+  itemTitleClick(title:string){
+    console.log(`this is the clicked title '${title}'`);
+  }
+
 }

@@ -1,3 +1,8 @@
-
-
+<div *ngFor="let annonce of annonces">
+  <app-annonce-item
+    [annonce]="annonce"
+    (onTitleClick)="itemTitleClick($event)">
+  </app-annonce-item>
+  <div></div>
+</div>
 

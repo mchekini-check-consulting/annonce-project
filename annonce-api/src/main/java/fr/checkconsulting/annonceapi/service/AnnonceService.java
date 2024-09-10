@@ -1,9 +1,11 @@
 package fr.checkconsulting.annonceapi.service;
 
+import fr.checkconsulting.annonceapi.dto.AnnonceDto;
 import fr.checkconsulting.annonceapi.dto.SearchAnnonceCriteriaDto;
 import fr.checkconsulting.annonceapi.dto.StatisticsDto;
 import fr.checkconsulting.annonceapi.entity.Annonce;
 import fr.checkconsulting.annonceapi.exception.ResourceNotFoundException;
+import fr.checkconsulting.annonceapi.mapper.AnnonceMapper;
 import fr.checkconsulting.annonceapi.repository.AnnonceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -88,7 +91,8 @@ public class AnnonceService {
         return annonceRepository.save(existingAnnonce);
     }
 
-    public Page<Annonce> searchAnnonce(SearchAnnonceCriteriaDto searchAnnonceCriteriaDto) {
+    @Transactional
+    public Page<AnnonceDto> searchAnnonce(SearchAnnonceCriteriaDto searchAnnonceCriteriaDto) {
 
         Sort sort = Sort.by(
                 searchAnnonceCriteriaDto.getOrders().stream()
@@ -101,15 +105,18 @@ public class AnnonceService {
                 sort);
 
         return annonceRepository.searchAnnonce(searchAnnonceCriteriaDto.getMinPrice(),
-                searchAnnonceCriteriaDto.getMaxPrice(),
-                searchAnnonceCriteriaDto.getTitle(),
-                searchAnnonceCriteriaDto.getCategory(),
-                searchAnnonceCriteriaDto.getStartDate(),
-                searchAnnonceCriteriaDto.getEndDate(), pageable);
+                        searchAnnonceCriteriaDto.getMaxPrice(),
+                        searchAnnonceCriteriaDto.getTitle(),
+                        searchAnnonceCriteriaDto.getCategory(),
+                        searchAnnonceCriteriaDto.getStartDate(),
+                        searchAnnonceCriteriaDto.getEndDate(), pageable)
+                .map(AnnonceMapper::toAnnonceDto);
+
+
     }
 
     public StatisticsDto getAnnonceStatistics() {
-        List<Annonce> annonces= annonceRepository.findAll();
+        List<Annonce> annonces = annonceRepository.findAll();
 
         return StatisticsDto.builder()
                 .byCategory(groupAndCountByCategory(annonces))
@@ -117,19 +124,18 @@ public class AnnonceService {
                 .build();
 
 
+    }
+
+    private Map<String, Long> groupAndCountByCategory(List<Annonce> annonces) {
+        return annonces.stream()
+                .collect(Collectors.groupingBy(annonce -> annonce.getCategory().name(), Collectors.counting()));
+
 
     }
 
-    private Map<String,Long> groupAndCountByCategory(List<Annonce> annonces ){
-       return  annonces.stream()
-                .collect(Collectors.groupingBy(annonce-> annonce.getCategory().name(), Collectors.counting()));
-
-
-    }
-
-    private SortedMap<String,Long> groupeAndCountByDate(List<Annonce> annonces ){
-        return annonces.stream().sorted(Comparator.comparing(Annonce::getPostedAt ))
-                .collect(Collectors.groupingBy(annonce -> annonce.getPostedAt().format(DateTimeFormatter.ISO_DATE),TreeMap::new,Collectors.counting()));
+    private SortedMap<String, Long> groupeAndCountByDate(List<Annonce> annonces) {
+        return annonces.stream().sorted(Comparator.comparing(Annonce::getPostedAt))
+                .collect(Collectors.groupingBy(annonce -> annonce.getPostedAt().format(DateTimeFormatter.ISO_DATE), TreeMap::new, Collectors.counting()));
     }
 
 
