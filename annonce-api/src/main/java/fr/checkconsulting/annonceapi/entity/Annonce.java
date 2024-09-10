@@ -4,6 +4,7 @@ package fr.checkconsulting.annonceapi.entity;
 import fr.checkconsulting.annonceapi.enums.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import static jakarta.persistence.EnumType.STRING;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Annonce {
 
     @Id
@@ -27,4 +29,6 @@ public class Annonce {
     private Integer price;
     private String localisation;
     private LocalDate postedAt;
+    @Lob
+    private byte[] image;
 }

@@ -6,5 +6,6 @@ create table annonce
     category     VARCHAR(100) NOT NULL,
     price        INTEGER      NOT NULL,
     localisation VARCHAR(255) NOT NULL,
-    posted_at    DATE         NOT NULL
+    posted_at    DATE         NOT NULL,
+    image        oid
 );

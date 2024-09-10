@@ -3,6 +3,7 @@ package fr.checkconsulting.annonceapi.resource;
 import fr.checkconsulting.annonceapi.dto.SearchAnnonceCriteriaDto;
 import fr.checkconsulting.annonceapi.dto.StatisticsDto;
 import fr.checkconsulting.annonceapi.entity.Annonce;
+import fr.checkconsulting.annonceapi.enums.Category;
 import fr.checkconsulting.annonceapi.service.AnnonceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,7 +13,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -29,14 +32,11 @@ public class AnnonceResource {
         this.annonceService = annonceService;
     }
 
-    @Operation(summary = "Créer une nouvelle annonce", description = "Ajoute une nouvelle annonce à la base de données.")
-    @PostMapping
-    public ResponseEntity<Annonce> createAnnonce(
-            @Parameter(description = "L'annonce à ajouter, doit être envoyée au format JSON", required = true)
-            @RequestBody Annonce annonce) {
-        Annonce savedAnnonce = annonceService.saveAnnonce(annonce);
-        return ResponseEntity.created(URI.create("/api/v1/annonce/" + savedAnnonce.getAnnonceId()))
-                .body(savedAnnonce);
+
+    @Operation(summary = "Lister toutes les annonces", description = "Retourne une liste complète de toutes les annonces disponibles.")
+    @GetMapping
+    public ResponseEntity<List<Annonce>> getAllAnnonces() {
+        return ResponseEntity.ok().body(annonceService.findAllAnnonces());
     }
 
     @Operation(summary = "Obtenir une annonce par ID", description = "Récupère une annonce en fonction de son ID.")
@@ -52,10 +52,30 @@ public class AnnonceResource {
         }
     }
 
-    @Operation(summary = "Lister toutes les annonces", description = "Retourne une liste complète de toutes les annonces disponibles.")
-    @GetMapping
-    public ResponseEntity<List<Annonce>> getAllAnnonces() {
-        return ResponseEntity.ok().body(annonceService.findAllAnnonces());
+
+    @Operation(summary = "Créer une nouvelle annonce", description = "Ajoute une nouvelle annonce à la base de données.")
+    @PostMapping
+    public ResponseEntity<Annonce> createAnnonce(
+            @Parameter(description = "L'annonce à ajouter, doit être envoyée au format JSON", required = true)
+            @RequestParam MultipartFile image,
+            @RequestParam String title,
+            @RequestParam String description,
+            @RequestParam Category category,
+            @RequestParam String localisation,
+            @RequestParam Integer price
+    ) throws IOException {
+        Annonce annonce = Annonce.builder()
+                .localisation(localisation)
+                .category(category)
+                .price(price)
+                .description(description)
+                .title(title)
+                .image(image.getBytes())
+                .build();
+
+        Annonce savedAnnonce = annonceService.saveAnnonce(annonce);
+        return ResponseEntity.created(URI.create("/api/v1/annonce/" + savedAnnonce.getAnnonceId()))
+                .body(savedAnnonce);
     }
 
     @Operation(summary = "Mettre à jour une annonce par ID", description = "Met à jour une annonce existante en fonction de son ID.")
