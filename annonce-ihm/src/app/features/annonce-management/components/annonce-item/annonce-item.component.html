@@ -1,1 +1,20 @@
+<div class="item">
+  <div class="container">
+    <div class="image-div">
+      <img class="image" [src]="annonce?.image" alt="Annonce Image">
+    </div>
+    <div class="info">
+      <div>
+        <div class="info-price"> {{ annonce?.price }} €</div>
+        <div class="info-title" (click)="onClick()">{{ annonce?.title }}</div>
+        <div>{{ annonce?.localisation }}</div>
+      </div>
 
+      <div class="info-bottom">
+        <div>{{ annonce?.category }}</div>
+        <div> {{ annonce?.postedAt }}</div>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>

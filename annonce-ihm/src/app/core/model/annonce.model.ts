@@ -6,4 +6,5 @@ export interface AnnonceModel {
   price: number;
   localisation: string;
   postedAt: string;
+  image?: string;
 }
