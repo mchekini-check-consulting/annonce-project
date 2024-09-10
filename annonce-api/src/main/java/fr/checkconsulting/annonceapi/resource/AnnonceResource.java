@@ -1,10 +1,13 @@
 package fr.checkconsulting.annonceapi.resource;
 
 import fr.checkconsulting.annonceapi.dto.SearchAnnonceCriteriaDto;
+import fr.checkconsulting.annonceapi.dto.StatisticsDto;
 import fr.checkconsulting.annonceapi.entity.Annonce;
 import fr.checkconsulting.annonceapi.service.AnnonceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -102,6 +105,19 @@ public class AnnonceResource {
                     " si vous ne souhaitez pas prendre en compte le critère, laissez à null ou ne pas inclure le critère", required = true)
             @RequestBody SearchAnnonceCriteriaDto searchAnnonceCriteriaDto) {
         return ResponseEntity.ok(annonceService.searchAnnonce(searchAnnonceCriteriaDto));
+    }
+
+    @Operation(
+            summary = "Récupérer les statistiques des annonces",
+            description = "Permet de récupérer les statistiques des annonces regroupées par catégorie et par date."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Statistiques récupérées avec succès"),
+            @ApiResponse(responseCode = "500", description = "Erreur serveur interne")
+    })
+    @GetMapping("/statistics")
+    public ResponseEntity<StatisticsDto> statistics() {
+        return ResponseEntity.ok().body(annonceService.getAnnonceStatistics());
     }
 }
 

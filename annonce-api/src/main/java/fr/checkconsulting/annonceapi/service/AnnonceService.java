@@ -1,6 +1,7 @@
 package fr.checkconsulting.annonceapi.service;
 
 import fr.checkconsulting.annonceapi.dto.SearchAnnonceCriteriaDto;
+import fr.checkconsulting.annonceapi.dto.StatisticsDto;
 import fr.checkconsulting.annonceapi.entity.Annonce;
 import fr.checkconsulting.annonceapi.exception.ResourceNotFoundException;
 import fr.checkconsulting.annonceapi.repository.AnnonceRepository;
@@ -12,8 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AnnonceService {
@@ -105,4 +107,30 @@ public class AnnonceService {
                 searchAnnonceCriteriaDto.getStartDate(),
                 searchAnnonceCriteriaDto.getEndDate(), pageable);
     }
+
+    public StatisticsDto getAnnonceStatistics() {
+        List<Annonce> annonces= annonceRepository.findAll();
+
+        return StatisticsDto.builder()
+                .byCategory(groupAndCountByCategory(annonces))
+                .byDate(groupeAndCountByDate(annonces))
+                .build();
+
+
+
+    }
+
+    public Map<String,Long> groupAndCountByCategory(List<Annonce> annonces ){
+       return  annonces.stream()
+                .collect(Collectors.groupingBy(annonce-> annonce.getCategory().name(), Collectors.counting()));
+
+
+    }
+
+    public TreeMap<String,Long> groupeAndCountByDate(List<Annonce> annonces ){
+        return annonces.stream().sorted(Comparator.comparing(Annonce::getPostedAt ))
+                .collect(Collectors.groupingBy(annonce -> annonce.getPostedAt().format(DateTimeFormatter.ISO_DATE),TreeMap::new,Collectors.counting()));
+    }
+
+
 }

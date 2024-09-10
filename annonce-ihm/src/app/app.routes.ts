@@ -3,7 +3,7 @@ import {GestionAnnoncesComponent} from "./features/gestion-annonces/gestion-anno
 import {StatistiquesComponent} from "./features/statistiques/statistiques.component";
 
 export const routes: Routes = [
-
+  {path: '', component: GestionAnnoncesComponent},
   {path: 'gestion-annonces', component: GestionAnnoncesComponent},
   {path: 'statistiques', component: StatistiquesComponent},
 
