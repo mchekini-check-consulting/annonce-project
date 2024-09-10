@@ -1,18 +1,25 @@
 package fr.checkconsulting.annonceapi.resource;
 
+import fr.checkconsulting.annonceapi.dto.AnnonceDto;
 import fr.checkconsulting.annonceapi.dto.SearchAnnonceCriteriaDto;
 import fr.checkconsulting.annonceapi.dto.StatisticsDto;
 import fr.checkconsulting.annonceapi.entity.Annonce;
+import fr.checkconsulting.annonceapi.mapper.AnnonceMapper;
 import fr.checkconsulting.annonceapi.service.AnnonceService;
+import fr.checkconsulting.annonceapi.service.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -20,23 +27,54 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v1/annonce")
 @CrossOrigin
+@Slf4j
 @Tag(name = "Annonces", description = "API qui permet de gérer les annonces")
 public class AnnonceResource {
 
     private final AnnonceService annonceService;
+    private final ImageService imageService;
+    private final AnnonceMapper annonceMapper;
 
-    public AnnonceResource(AnnonceService annonceService) {
-        this.annonceService = annonceService;
+    public AnnonceResource(AnnonceService annonceService, ImageService imageService, AnnonceMapper annonceMapper) {
+         this.annonceService = annonceService;
+         this.imageService = imageService;
+        this.annonceMapper = annonceMapper;
     }
 
     @Operation(summary = "Créer une nouvelle annonce", description = "Ajoute une nouvelle annonce à la base de données.")
     @PostMapping
-    public ResponseEntity<Annonce> createAnnonce(
-            @Parameter(description = "L'annonce à ajouter, doit être envoyée au format JSON", required = true)
-            @RequestBody Annonce annonce) {
-        Annonce savedAnnonce = annonceService.saveAnnonce(annonce);
-        return ResponseEntity.created(URI.create("/api/v1/annonce/" + savedAnnonce.getAnnonceId()))
-                .body(savedAnnonce);
+    public ResponseEntity<?> createAnnonce(
+            @Valid @RequestBody AnnonceDto annonceDto,
+            @RequestParam("image") MultipartFile image) {
+        try {
+
+            if (!isValidImage(image)) {
+                return ResponseEntity.badRequest().body("Invalid image format or size");
+            }
+
+
+            String imagePath = imageService.storeImage(image);
+
+            Annonce annonce = annonceMapper.toEntity(annonceDto);
+            annonce.setImagePath(imagePath);
+            Annonce savedAnnonce = annonceService.saveAnnonce(annonce);
+
+            return ResponseEntity
+                    .created(URI.create("/api/v1/annonce/" + savedAnnonce.getAnnonceId()))
+                    .body(annonceMapper.toDto(savedAnnonce));
+        } catch (IOException e) {
+            log.error("Failed to process image", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to process image");
+        } catch (Exception e) {
+            log.error("Failed to create annonce", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to create annonce");
+        }
+    }
+
+    private boolean isValidImage(MultipartFile file) {
+        return true;
     }
 
     @Operation(summary = "Obtenir une annonce par ID", description = "Récupère une annonce en fonction de son ID.")

@@ -1,33 +1,31 @@
-package fr.checkconsulting.annonceapi.entity;
-
+package fr.checkconsulting.annonceapi.dto;
 
 import fr.checkconsulting.annonceapi.enums.Category;
-import jakarta.persistence.*;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static jakarta.persistence.EnumType.STRING;
 
+
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Annonce {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AnnonceDto {
     private Integer annonceId;
     private String title;
     private String description;
+    private LocalDate postedAt;
+    private Integer price;
     @Enumerated(STRING)
     private Category category;
-    private Integer price;
     private String localisation;
-    private LocalDate postedAt;
-    private String imagePath;
 }
