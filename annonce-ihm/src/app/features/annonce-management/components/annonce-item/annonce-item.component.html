@@ -1,20 +1,26 @@
-<div class="item">
-  <div class="container">
-    <div class="image-div">
-      <img class="image" [src]="'data:image/png;base64,' + annonce?.imagebase64" alt="Annonce Image">
-    </div>
-    <div class="info">
-      <div>
-        <div class="info-price"> {{ annonce?.price }} €</div>
-        <div class="info-title" (click)="onClick()">{{ annonce?.title }}</div>
-        <div>{{ annonce?.localisation }}</div>
+<div *ngIf="!displayDetails" class="announcement-card">
+  <mat-card class="announcement">
+    <div class="announcement-content">
+      <div class="image-container">
+        <img mat-card-image [src]="annonce?.imagebase64" alt="Annonce Image">
       </div>
+      <div class="details-container">
+        <h2 class="announcement-title">{{ annonce?.title }}</h2>
+        <p class="announcement-description">{{ annonce?.description }}</p>
+        <p class="announcement-price">{{ annonce?.price | currency:'EUR' }}</p>
+        <p class="announcement-category">{{ annonce?.category }}</p>
 
-      <div class="info-bottom">
-        <div>{{ annonce?.category }}</div>
-        <div> {{ annonce?.postedAt }}</div>
+        <div class="footer-container">
+          <p class="announcement-date">Publié le {{ annonce?.postedAt }}</p>
+          <button mat-button color="primary" class="action-button" (click)="showDetails()">Voir Détails</button>
+        </div>
+
       </div>
     </div>
-  </div>
-  <hr>
+  </mat-card>
+</div>
+
+<div *ngIf="displayDetails">
+  <app-annonce-detail [annonce]="annonce !== null ? annonce : undefined"
+  ></app-annonce-detail>
 </div>

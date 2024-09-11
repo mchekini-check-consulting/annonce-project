@@ -1,0 +1,59 @@
+<div class="announcement-container">
+  <!-- Section des images -->
+  <div class="image-section">
+    <mat-card class="main-image-card">
+      <!-- Photo principale -->
+      <img mat-card-image [src]="inputAnnonce?.imagebase64" alt="Image principale de l'annonce">
+    </mat-card>
+
+    <!-- Miniatures en dessous de la photo principale -->
+    <div class="thumbnail-gallery">
+      <mat-card class="thumbnail-card" *ngFor="let image of annonce?.thumbnailImages" (click)="changeMainImage(image)">
+        <img mat-card-image [src]="image" alt="Miniature">
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Section des détails -->
+  <div class="details-section">
+    <h1>{{ inputAnnonce?.title }}</h1>
+    <p class="sub-info">{{ annonce?.rooms }} Pièces · {{ annonce?.area }} m² · {{ inputAnnonce?.localisation }}</p>
+    <span class="label mat-chip mat-chip-raised">Exclusivité</span>
+    <h2 class="price">{{ inputAnnonce?.price | currency:'EUR' }} <span class="price-per-sqm">{{ annonce?.pricePerSqm }} €/m²</span></h2>
+    <a href="#" class="calculate">Calculer mes mensualités</a>
+    <p class="date">Publié {{ inputAnnonce?.postedAt }}</p>
+
+    <h3>Description</h3>
+    <p class="description">{{ inputAnnonce?.description }}</p>
+  </div>
+
+  <!-- Section des infos du vendeur (élargie à 30%) -->
+  <div class="seller-info">
+    <mat-card class="seller-card">
+      <img class="seller-logo" [src]="annonce?.agency?.logo" alt="Logo de l'agence">
+      <h4>{{ annonce?.agency?.name }}</h4>
+      <div class="ratings">
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
+        <mat-icon>star_half</mat-icon>
+        <p>{{ annonce?.agency?.reviewsCount }} avis</p>
+      </div>
+      <p class="seller-type">{{ annonce?.agency?.type }}</p>
+      <p>{{ annonce?.agency?.listingsCount }} annonces</p>
+      <button mat-raised-button color="primary" class="contact-button">Envoyer un message</button>
+      <button mat-stroked-button class="phone-button">Voir le numéro</button>
+    </mat-card>
+  </div>
+</div>
+
+<!-- Section de la carte -->
+<div class="map-container">
+  <mat-card class="map-card">
+    <h3>Localisation</h3>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9999999999995!2d2.3522219!3d48.856614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671d1e35a1d1f%3A0xd5f7df6e9df07d9b!2sParis!5e0!3m2!1sen!2sfr!4v1634236856475!5m2!1sen!2sfr"
+      width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  </mat-card>
+</div>

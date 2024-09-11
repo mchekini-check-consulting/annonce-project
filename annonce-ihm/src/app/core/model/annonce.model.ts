@@ -5,6 +5,7 @@ export interface AnnonceModel {
   category: string;
   price: number;
   localisation: string;
-  postedAt: string;
+  postedAt?: string;
   imagebase64?: string;
+  imageFile?:Blob
 }

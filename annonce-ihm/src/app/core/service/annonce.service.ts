@@ -15,7 +15,7 @@ export class AnnonceService {
   }
 
   searchAnnonces(body : SearchCriteriaModel) : Observable<Page<AnnonceModel>> {
-     return this.http.post<Page<AnnonceModel>>('http://localhost:8080/api/v1/annonce/search', body);
+     return this.http.post<Page<AnnonceModel>>('http://52.23.192.75:8080/api/v1/annonce/search', body);
   }
 
   deleteAnnonceById(id: number): Observable<void> {
@@ -23,7 +23,18 @@ export class AnnonceService {
   }
 
   createAnnonce(body: AnnonceModel): Observable<AnnonceModel> {
-    return this.http.post<AnnonceModel>('http://52.23.192.75:8080/api/v1/annonce', body);
+
+    const formData = new FormData();
+    formData.append('title', body.title);
+    formData.append('description', body.description);
+    formData.append('price', body.price.toString());
+    formData.append('category', body.category);
+    formData.append('localisation', body.localisation);
+    if(body.imageFile){
+      formData.append('image', body.imageFile);
+    }
+
+    return this.http.post<AnnonceModel>('http://52.23.192.75:8080/api/v1/annonce', formData);
   }
 
   getStatistics():Observable<StatisticsDto>{
