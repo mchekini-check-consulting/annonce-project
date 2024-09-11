@@ -1,20 +1,21 @@
-<div class="item">
+<div class="item" (click)="onClick()">
   <div class="container">
     <div class="image-div">
-      <img class="image" [src]="'data:image/png;base64,' + annonce?.imagebase64" alt="Annonce Image">
+      <div class="badge">À la une</div>
+      <img class="image" [src]="'data:image/png;base64,'+annonce?.imagebase64" alt="Annonce Image">
     </div>
     <div class="info">
       <div>
-        <div class="info-price"> {{ annonce?.price }} €</div>
+        <div class="info-price">{{ annonce?.price }} €</div>
         <div class="info-title" (click)="onClick()">{{ annonce?.title }}</div>
+        <div class="info-desc" (click)="onClick()">{{ annonce?.description }}</div>
+
         <div>{{ annonce?.localisation }}</div>
       </div>
-
       <div class="info-bottom">
         <div>{{ annonce?.category }}</div>
-        <div> {{ annonce?.postedAt }}</div>
+        <div>{{ annonce?.postedAt }}</div>
       </div>
     </div>
   </div>
-  <hr>
 </div>
