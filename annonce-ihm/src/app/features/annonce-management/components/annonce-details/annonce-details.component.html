@@ -1,0 +1,15 @@
+<div class="detail-container">
+  <div class="image-section">
+    <img class="detail-image" [src]="'data:image/png;base64,'+annonce?.imagebase64" alt="Annonce Image">
+  </div>
+  <div class="info-section">
+    <h1 class="detail-title">{{ annonce?.title }}</h1>
+    <p class="detail-description">{{ annonce?.description }}</p>
+    <div class="info-details">
+      <span class="detail-category">{{ annonce?.category }}</span>
+      <span class="detail-localisation">{{ annonce?.localisation }}</span>
+      <span class="detail-price">{{ annonce?.price }} €</span>
+      <span class="detail-date">{{ annonce?.postedAt }}</span>
+    </div>
+  </div>
+</div>

@@ -21,6 +21,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDivider } from '@angular/material/divider';
 import {MatDialogRef} from "@angular/material/dialog";
+import {blobToBase64} from "../../core/utils";
 @Component({
   selector: 'app-annonce-form',
   standalone: true,
@@ -48,6 +49,7 @@ import {MatDialogRef} from "@angular/material/dialog";
 })
 export class AnnonceFormComponent implements OnInit {
   annonceForm!: FormGroup;
+  imagePreview:String ='https://static.thenounproject.com/png/4595376-200.png';
 
   categories: string[] = [
     'SPORT',
@@ -69,8 +71,8 @@ export class AnnonceFormComponent implements OnInit {
       price: [null, [Validators.required, Validators.min(0)]],
       localisation: ['', Validators.required],
       category: ['', Validators.required],
-      postedAt: [null, Validators.required],
       description: ['', Validators.required],
+      imageFile: [null],
     });
   }
 
@@ -82,7 +84,7 @@ export class AnnonceFormComponent implements OnInit {
         category: this.annonceForm.get('category')?.value,
         price: this.annonceForm.get('price')?.value,
         localisation: this.annonceForm.get('localisation')?.value,
-        postedAt: this.annonceForm.get('postedAt')?.value,
+        imageFile: this.annonceForm.get('imageFile')?.value
       };
       this.annonceService.createAnnonce(model).subscribe(() => {
         this.closeDialog();
@@ -94,11 +96,24 @@ export class AnnonceFormComponent implements OnInit {
   closeDialog(): void {
     console.log("attempt close current Dialog");
     this.dialogRef.close();
-    // this.annonceForm.reset();
-    // Object.keys(this.annonceForm.controls).forEach((key) => {
-    //   const control = this.annonceForm.get(key);
-    //   control?.clearValidators();
-    //   control?.updateValueAndValidity();
-    // });
+  }
+
+  onFileSelected($event: Event) {
+    const file = ($event.target as HTMLInputElement).files?.[0];
+
+    if(file){
+       blobToBase64(file).then(result =>{
+         this.imagePreview =result;
+       });
+
+      this.annonceForm.patchValue({
+        imageFile: file
+      });
+    }else{
+      console.log("file undefined or null")
+    }
+
+    this.annonceForm.get('imageFile')?.markAsTouched();
+    this.annonceForm.get('imageFile')?.updateValueAndValidity();
   }
 }

@@ -8,12 +8,12 @@ import {AnnonceModel} from "../../../../core/model/annonce.model";
   templateUrl: './annonce-item.component.html',
   styleUrl: './annonce-item.component.css'
 })
-export class AnnonceItemComponent{
+export class AnnonceItemComponent {
   @Input("annonce") annonce?: AnnonceModel;
-  @Output() onTitleClick = new EventEmitter<string>();
+  @Output() onTitleClick = new EventEmitter<number>();
 
   onClick() {
-      this.onTitleClick.emit(this.annonce?.title);
+      this.onTitleClick.emit(this.annonce?.annonceId);
   }
 
   constructor() {
