@@ -29,6 +29,6 @@ public class Annonce {
     private Integer price;
     private String localisation;
     private LocalDate postedAt;
-    @Lob
-    private byte[] image;
+//    @Lob
+//    private byte[] image;
 }

@@ -16,7 +16,7 @@ public class AnnonceMapper {
                 .price(annonce.getPrice())
                 .localisation(annonce.getLocalisation())
                 .postedAt(annonce.getPostedAt())
-                .imagebase64("data:image/jpeg;base64," + Base64.getEncoder().encodeToString(annonce.getImage()))
+//                .imagebase64("data:image/jpeg;base64," + Base64.getEncoder().encodeToString(annonce.getImage()))
                 .build();
     }
 }

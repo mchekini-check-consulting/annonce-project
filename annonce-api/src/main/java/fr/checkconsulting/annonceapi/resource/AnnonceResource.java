@@ -70,7 +70,7 @@ public class AnnonceResource {
                 .price(price)
                 .description(description)
                 .title(title)
-                .image(image.getBytes())
+//                .image(image.getBytes())
                 .build();
 
         Annonce savedAnnonce = annonceService.saveAnnonce(annonce);
